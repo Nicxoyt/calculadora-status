@@ -53,6 +53,10 @@
             text-align: left;
             width: 100%;
         }
+        .estatus-texto {
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +67,7 @@
         <div class="status">
             <p>Estatus Social:</p>
             <p id="estatus">0</p>
+            <p id="estatusTexto" class="estatus-texto"></p>
         </div>
     </div>
     <div class="historial">
@@ -73,6 +78,18 @@
     <script>
         let estatusSocial = 0;
         
+        function actualizarTextoEstatus() {
+            let texto = "";
+            if (estatusSocial <= 1) {
+                texto = "Mera basura vos";
+            } else if (estatusSocial >= 2 && estatusSocial <= 3999) {
+                texto = "Estás bien";
+            } else if (estatusSocial >= 4000) {
+                texto = "Tenés exceso de estatus";
+            }
+            document.getElementById("estatusTexto").innerText = texto;
+        }
+        
         function procesarAccion() {
             let inputAccion = document.getElementById("inputAccion").value;
             if (!inputAccion) return;
@@ -81,15 +98,18 @@
             let lowerCaseInput = inputAccion.toLowerCase();
             
             if (lowerCaseInput.includes("simon")) {
-                cambio = -100;
+                cambio = -10000;
             } else if (lowerCaseInput.includes("blandon") || lowerCaseInput.includes("nicolas") || lowerCaseInput.includes("juanse")) {
-                cambio = 1000;
+                cambio = 2000;
+            } else if (lowerCaseInput.includes("chatgpt")) {
+                cambio = Math.random() < 0.5 ? Math.floor(Math.random() * 500) + 100 : -Math.floor(Math.random() * 100);
             } else {
-                cambio = Math.random() < 0.5 ? -Math.floor(Math.random() * 20) : Math.floor(Math.random() * 20);
+                cambio = Math.random() < 0.8 ? Math.floor(Math.random() * 500) + 100 : -Math.floor(Math.random() * 100);
             }
             
             estatusSocial += cambio;
             document.getElementById("estatus").innerText = estatusSocial;
+            actualizarTextoEstatus();
             
             let historialLista = document.getElementById("historial-lista");
             let nuevoItem = document.createElement("li");
@@ -104,4 +124,3 @@
     </script>
 </body>
 </html>
-
