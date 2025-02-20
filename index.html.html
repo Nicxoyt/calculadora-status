@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Estatus Social</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .historial {
+            margin-top: 20px;
+            max-width: 100%;
+            text-align: left;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Estatus Social</h1>
+    <div class="container">
+        <input type="text" id="inputAccion" placeholder="Escribe una acción">
+        <button id="botonEnviar">Enviar</button>
+        <div class="status">
+            <p>Estatus Social:</p>
+            <p id="estatus">0</p>
+        </div>
+    </div>
+    <div class="historial">
+        <h3>Historial:</h3>
+        <ul id="historial-lista"></ul>
+    </div>
+
+    <script>
+        let estatusSocial = 0;
+        
+        function procesarAccion() {
+            let inputAccion = document.getElementById("inputAccion").value;
+            if (!inputAccion) return;
+            
+            let cambio;
+            let lowerCaseInput = inputAccion.toLowerCase();
+            
+            if (lowerCaseInput.includes("simon")) {
+                cambio = -100;
+            } else if (lowerCaseInput.includes("blandon") || lowerCaseInput.includes("nicolas") || lowerCaseInput.includes("juanse")) {
+                cambio = 1000;
+            } else {
+                cambio = Math.random() < 0.5 ? -Math.floor(Math.random() * 20) : Math.floor(Math.random() * 20);
+            }
+            
+            estatusSocial += cambio;
+            document.getElementById("estatus").innerText = estatusSocial;
+            
+            let historialLista = document.getElementById("historial-lista");
+            let nuevoItem = document.createElement("li");
+            nuevoItem.innerText = `${inputAccion} (${cambio > 0 ? '+' : ''}${cambio})`;
+            historialLista.appendChild(nuevoItem);
+            
+            document.getElementById("inputAccion").value = "";
+        }
+        
+        document.getElementById("botonEnviar").addEventListener("click", procesarAccion);
+        document.getElementById("botonEnviar").addEventListener("touchstart", procesarAccion);
+    </script>
+</body>
+</html>
+
