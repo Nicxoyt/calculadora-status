@@ -78,9 +78,13 @@
     <script>
         let estatusSocial = 0;
         
-        function actualizarTextoEstatus() {
+        function actualizarTextoEstatus(inputAccion) {
             let texto = "";
-            if (estatusSocial <= 1) {
+            let lowerCaseInput = inputAccion.toLowerCase();
+            
+            if (lowerCaseInput.includes("simon")) {
+                texto = "Estás muy grasoso";
+            } else if (estatusSocial <= 1) {
                 texto = "Mera basura vos";
             } else if (estatusSocial >= 2 && estatusSocial <= 3999) {
                 texto = "Estás bien";
@@ -109,7 +113,7 @@
             
             estatusSocial += cambio;
             document.getElementById("estatus").innerText = estatusSocial;
-            actualizarTextoEstatus();
+            actualizarTextoEstatus(inputAccion);
             
             let historialLista = document.getElementById("historial-lista");
             let nuevoItem = document.createElement("li");
